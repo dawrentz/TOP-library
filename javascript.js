@@ -1,13 +1,14 @@
 const myLibrary = [];
-
 const bookCards = document.querySelector("#book-cards");
+let bookCount = myLibrary.length;
 
-function Book(title, author, pages, haveRead, notes) {
+function Book(title, author, pages, haveRead, notes, bookID) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.haveRead = Boolean(haveRead);
   this.notes = notes;
+  this.bookID = bookID;
   addBookToMyLibrary(this);
 }
 
@@ -22,10 +23,10 @@ function addBookToMyLibrary(book) {
   myLibrary.push(book);
 }
 
-const book0 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
-const book1 = new Book("The Shining", "Stephen King", 303, true);
-const book2 = new Book("The Road", "Cormac McCarthy", 244, false);
-const book3 = new Book("Moby Dick", "Herman Melville", 478, false);
+// const book0 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
+// const book1 = new Book("The Shining", "Stephen King", 303, true);
+// const book2 = new Book("The Road", "Cormac McCarthy", 244, false);
+// const book3 = new Book("Moby Dick", "Herman Melville", 478, false);
 
 
 
@@ -41,6 +42,7 @@ function addBookToPage(book) {
   const newBookLink = document.createElement("a");
   newBookLink.className = "book-link";
   newBookLink.setAttribute("href", "");
+  newBookLink.setAttribute("data-book-id", book.bookID);
   
   const newBookCard = document.createElement("div");
   newBookCard.className = "book-card";
@@ -96,28 +98,33 @@ submitBookBtn.addEventListener("click", function(event) {
   
   
   if (newBookForm.checkValidity()) {
-  
+    
     const newTitle = document.querySelector("#title").value;
     const newAuthor = document.querySelector("#author").value;
     const newPages = document.querySelector("#pages").value;
     const newHaveRead = document.querySelector("#haveRead").checked;
     const newNotes = document.querySelector("#notes").value;
-  
-    const newBook = new Book(newTitle, newAuthor, newPages, newHaveRead, newNotes); //needs notes
+    const bookID = bookCount;
+    
+    //problem with using new book everytime?
+    const newBook = new Book(newTitle, newAuthor, newPages, newHaveRead, newNotes, bookID);
     addBookToPage(newBook);
-
+    
     newBookForm.classList.add("hidden");
     addNewBookBtn.classList.remove("hidden"); 
     newBookForm.reset();
+
+    console.log("bookCount: " + bookCount);
+    console.log("newBookID: " + newBook.bookID);
+    bookCount++;
   }
-
-
-
 });
 
 
 
+document.querySelector("body").addEventListener("click", function() {
+  console.log(myLibrary);
+  console.log(bookCount);
 
-// document.querySelector("body").addEventListener("click", () => console.log(Object.getPrototypeOf(newHaveRead)));
-// document.querySelector("body").addEventListener("click", () => console.log(newHaveRead.checked));
+});
 
