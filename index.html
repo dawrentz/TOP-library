@@ -12,14 +12,7 @@
   <h1>My Library</h1>
 
 <div id="book-cards">
-  <!-- <a href="" class="book-link">
-    <div class="book-card" id="book-card-template">
-      <div class="title">DemoTitle</div>
-      <div class="author">DemoAuthor</div>
-      <div class="pages">DemoPages</div>
-      <div class="haveRead">DemoRead</div>
-    </div>
-  </a> -->
+<!-- book cards added with  JS-->
 </div>
 
 <div class="button-and-form-section">
@@ -27,23 +20,22 @@
   <form action="#" method="post" class="hidden">
     <fieldset>
       <legend> Please fill out new book info </legend>
-      
   
       <div class="form-line">
         <label for="title">*Title: </label>
-        <input type="text" name="title" id="title" required value="Moby Dick">
+        <input type="text" name="title" id="title" required value="Leiningen Versus the Ants">
         <span class="valid-check"></span>
       </div>
   
       <div class="form-line">
         <label for="author">*Author: </label>
-        <input type="text" name="author" id="author" required value="Herman Melville">
+        <input type="text" name="author" id="author" required value="Carl Stephenson">
         <span class="valid-check"></span>
       </div>
   
       <div class="form-line">
         <label for="pages">*Pages: </label>
-        <input type="number" name="pages" id="pages" required value="444">
+        <input type="number" name="pages" id="pages" required value="33">
         <span class="valid-check"></span>
       </div>
   
@@ -59,9 +51,6 @@
         placeholder="Add your personal notes here..."
         rows="5" cols="60"></textarea>
       </div>
-  
-  
-  
     </fieldset>
     <button type="submit" id="submit-book-btn">Submit Book</button>
   </form>

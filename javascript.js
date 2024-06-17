@@ -1,7 +1,19 @@
+//-----------------------------Declarations-----------------------------//
 const myLibrary = [];
 const bookCards = document.querySelector("#book-cards");
-let bookCount = myLibrary.length;
 
+const newBookForm = document.querySelector("form");
+const addNewBookBtn = document.querySelector(".add-new-book");
+
+const submitBookBtn = document.querySelector("#submit-book-btn");
+
+//intial books
+const book0 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true, "", 0);
+const book1 = new Book("The Shining", "Stephen King", 303, true, "", 1);
+const book2 = new Book("The Road", "Cormac McCarthy", 244, false, "", 2);
+const book3 = new Book("Moby Dick", "Herman Melville", 478, false, "", 3);
+
+//-----------------------------Constructors-----------------------------//
 function Book(title, author, pages, haveRead, notes, bookID) {
   this.title = title;
   this.author = author;
@@ -12,90 +24,102 @@ function Book(title, author, pages, haveRead, notes, bookID) {
   addBookToMyLibrary(this);
 }
 
-Book.prototype.haveReadMessage = () => this.haveRead ? "read" : "not read yet";
-Book.prototype.info = function() {
-  return `${this.title} by ${this.author}, ${this.pages}, ${this.haveReadMessage()}`;
-};
+//-----------------------------Methods-----------------------------//
+Book.prototype.haveReadMessage = function() {
+ return this.haveRead ? "read" : "not read yet";
+}
 
+//from initial assignment
+// Book.prototype.info = function() {
+//   return `${this.title} by ${this.author}, ${this.pages}, ${this.haveReadMessage()}`;
+// }
 
-
+//-----------------------------Functions-----------------------------//
 function addBookToMyLibrary(book) {
   myLibrary.push(book);
 }
 
-// const book0 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
-// const book1 = new Book("The Shining", "Stephen King", 303, true);
-// const book2 = new Book("The Road", "Cormac McCarthy", 244, false);
-// const book3 = new Book("Moby Dick", "Herman Melville", 478, false);
+function createElementWithClass(elementType, className, insertText) {
+  const tempElement = document.createElement(elementType);
+  tempElement.className = className;
+  if (insertText === "") {
+    //nothing
+  } else {tempElement.textContent = insertText;}
+  return tempElement;
+}
+
+function delBtnFunction(btn) {
+  btn.addEventListener("click", function() {
+    let delBookID = +btn.parentElement.getAttribute("data-book-id");
+    let libraryIDs = myLibrary.map((book) => book.bookID);
+    let delIndex;
+    
+    for(i = 0; i <libraryIDs.length; i++) {
+      if (libraryIDs[i] === delBookID) {
+        delIndex = i;
+      }
+    }
+  
+    console.log("delBookID: " + delBookID);
+    console.log("libraryIDs: " + libraryIDs);
+    console.log("delIndex: " + delIndex);
+    myLibrary.splice(delIndex, 1);
+    
+    btn.parentElement.remove();
+  });
+}
 
 
-
-
-
-
-myLibrary.forEach((book) => {
-  addBookToPage(book);
-});
-
+//create book elements and add to page
 function addBookToPage(book) {
+  const  newBookCard = createElementWithClass("div", "book-card", "");
+  newBookCard.setAttribute("data-book-id", book.bookID);
 
-  const newBookLink = document.createElement("a");
-  newBookLink.className = "book-link";
-  newBookLink.setAttribute("href", "");
-  newBookLink.setAttribute("data-book-id", book.bookID);
-  
-  const newBookCard = document.createElement("div");
-  newBookCard.className = "book-card";
-  
-  const newBookTitle = document.createElement("div");
-  newBookTitle.className = "title";
-  newBookTitle.textContent = book.title;
-  
-  const newBookAuthor = document.createElement("div");
-  newBookAuthor.className = "author";
-  newBookAuthor.textContent = book.author;
-  
-  const newBookPages = document.createElement("div");
-  newBookPages.className = "pages";
-  newBookPages.textContent = book.pages + " pages";
-  
-  const newBookHaveRead = document.createElement("div");
-  newBookHaveRead.className = "haveRead";
-  newBookHaveRead.textContent = book.haveReadMessage();
-  if (book.haveRead) {
+
+  const newBookTitle = createElementWithClass("div", "title", book.title);
+  const newBookAuthor = createElementWithClass("div", "author", book.author);
+  const newBookPages = createElementWithClass("div", "pages", book.pages);
+  const newBookHaveRead = createElementWithClass("div", "haveRead", book.haveReadMessage());
+  if (book.haveRead === true) {
     newBookHaveRead.style = "color: green";
   } else {newBookHaveRead.style = "color: red";}
 
-  const newBookNotes = document.createElement("div");
-  newBookNotes.className = "notes";
-  newBookNotes.textContent = "Notes: " + book.notes;
-    
+  const newBookNotes = createElementWithClass("div", "notes", "Notes: " + book.notes);
+  const newBookDelBtn = createElementWithClass("button", "del-button", "✖");
+  
   newBookCard.appendChild(newBookTitle);
   newBookCard.appendChild(newBookAuthor);
   newBookCard.appendChild(newBookPages);
   newBookCard.appendChild(newBookHaveRead);
   newBookCard.appendChild(newBookNotes);
-
-  newBookLink.appendChild(newBookCard);
+  newBookCard.appendChild(newBookDelBtn);
   
-  bookCards.appendChild(newBookLink);
+  bookCards.appendChild(newBookCard);
+
+  //Add delete button function after appending
+  delBtnFunction(newBookDelBtn);
 }
 
-const newBookForm = document.querySelector("form");
-const addNewBookBtn = document.querySelector(".add-new-book");
+//add temp books to on page load
+myLibrary.forEach((book) => {
+  addBookToPage(book);
+});
 
+//initilize bookID after adding books to library
+let nextBookID = myLibrary.length === 0 ? 0 : myLibrary[myLibrary.length - 1].bookID + 1;
+
+
+//-----------------------------Event Listeners-----------------------------//
+
+//hides/unhides form and form button
 addNewBookBtn.addEventListener("click", function() {
   newBookForm.classList.remove("hidden");
   addNewBookBtn.classList.add("hidden");
 });
 
-
-
-
-const submitBookBtn = document.querySelector("#submit-book-btn");
+//Submit button for adding a book. Only works if form is valid
 submitBookBtn.addEventListener("click", function(event) {
   event.preventDefault();
-  
   
   if (newBookForm.checkValidity()) {
     
@@ -104,7 +128,7 @@ submitBookBtn.addEventListener("click", function(event) {
     const newPages = document.querySelector("#pages").value;
     const newHaveRead = document.querySelector("#haveRead").checked;
     const newNotes = document.querySelector("#notes").value;
-    const bookID = bookCount;
+    const bookID = nextBookID;
     
     //problem with using new book everytime?
     const newBook = new Book(newTitle, newAuthor, newPages, newHaveRead, newNotes, bookID);
@@ -114,17 +138,19 @@ submitBookBtn.addEventListener("click", function(event) {
     addNewBookBtn.classList.remove("hidden"); 
     newBookForm.reset();
 
-    console.log("bookCount: " + bookCount);
+    console.log("nextBookID: " + nextBookID);
     console.log("newBookID: " + newBook.bookID);
-    bookCount++;
+    nextBookID++;
   }
 });
 
 
 
+
+//tester
 document.querySelector("body").addEventListener("click", function() {
+  console.log("myLibrary: vvvv");
   console.log(myLibrary);
-  console.log(bookCount);
-
+  console.log("nextBookID: " + nextBookID);
+  console.log("======================================================");
 });
-
