@@ -107,12 +107,18 @@ h1 {
     }
   }
 
+  
+
 }
 
 .title {
   font-size: x-large;
   text-decoration: underline;
   font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .author {
@@ -121,6 +127,23 @@ h1 {
 
 .haveRead {
   font-weight: bold;
+  box-shadow: none;
+  padding: 0 0.5rem;
+
+  &:hover {
+    transform: none;
+  }
+  
+  &.haveReadTrue {
+    background-color: green;    
+  }
+  
+  &.haveReadFalse {
+    background-color: red;    
+  }
+
+
+
 }
 
 .notes {

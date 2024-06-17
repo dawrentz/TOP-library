@@ -18,7 +18,7 @@ function Book(title, author, pages, haveRead, notes, bookID) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.haveRead = Boolean(haveRead);
+  this.haveRead = haveRead;
   this.notes = notes;
   this.bookID = bookID;
   addBookToMyLibrary(this);
@@ -79,13 +79,31 @@ function addBookToPage(book) {
   const newBookTitle = createElementWithClass("div", "title", book.title);
   const newBookAuthor = createElementWithClass("div", "author", book.author);
   const newBookPages = createElementWithClass("div", "pages", book.pages);
-  const newBookHaveRead = createElementWithClass("div", "haveRead", book.haveReadMessage());
+  
+  const newBookHaveRead = createElementWithClass("button", "haveRead", book.haveReadMessage());
   if (book.haveRead === true) {
-    newBookHaveRead.style = "color: green";
-  } else {newBookHaveRead.style = "color: red";}
+    newBookHaveRead.classList.add("haveReadTrue");
+  } else {newBookHaveRead.classList.add("haveReadFalse");}
+
+  newBookHaveRead.addEventListener("click", function() {
+    if (book.haveRead === true) {
+      newBookHaveRead.classList.remove("haveReadTrue");
+      newBookHaveRead.classList.add("haveReadFalse");
+      book.haveRead = false;
+      newBookHaveRead.textContent = book.haveReadMessage();
+    } else {
+      newBookHaveRead.classList.remove("haveReadFalse");
+      newBookHaveRead.classList.add("haveReadTrue");
+      book.haveRead = true;
+      newBookHaveRead.textContent = book.haveReadMessage();
+    }
+
+  });
 
   const newBookNotes = createElementWithClass("div", "notes", "Notes: " + book.notes);
   const newBookDelBtn = createElementWithClass("button", "del-button", "✖");
+  delBtnFunction(newBookDelBtn);
+   
   
   newBookCard.appendChild(newBookTitle);
   newBookCard.appendChild(newBookAuthor);
@@ -96,8 +114,8 @@ function addBookToPage(book) {
   
   bookCards.appendChild(newBookCard);
 
-  //Add delete button function after appending
-  delBtnFunction(newBookDelBtn);
+
+  
 }
 
 //add temp books to on page load
@@ -143,9 +161,6 @@ submitBookBtn.addEventListener("click", function(event) {
     nextBookID++;
   }
 });
-
-
-
 
 //tester
 document.querySelector("body").addEventListener("click", function() {
