@@ -48,84 +48,73 @@ function createElementWithClass(elementType, className, insertText) {
   return tempElement;
 }
 
+//remove book from page and array
 function delBtnFunction(btn) {
-  btn.addEventListener("click", function() {
-    let delBookID = +btn.parentElement.getAttribute("data-book-id");
-    let libraryIDs = myLibrary.map((book) => book.bookID);
-    let delIndex;
-    
-    for(i = 0; i <libraryIDs.length; i++) {
-      if (libraryIDs[i] === delBookID) {
-        delIndex = i;
-      }
+  let delBookID = +btn.parentElement.getAttribute("data-book-id");
+  for(i = 0; i < myLibrary.length; i++) {
+    if (myLibrary[i].bookID === delBookID) {
+      myLibrary.splice(i, 1);
+      break;
     }
-  
-    console.log("delBookID: " + delBookID);
-    console.log("libraryIDs: " + libraryIDs);
-    console.log("delIndex: " + delIndex);
-    myLibrary.splice(delIndex, 1);
-    
-    btn.parentElement.remove();
-  });
+  } 
+  btn.parentElement.remove();
 }
 
+function haveReadBtnFnc(HRBtnElement, currentBook) {
+  if (currentBook.haveRead) {
+    HRBtnElement.classList.remove("haveReadTrue");
+    HRBtnElement.classList.add("haveReadFalse");
+    currentBook.haveRead = false;
+    HRBtnElement.textContent = currentBook.haveReadMessage();
+  } else {
+    HRBtnElement.classList.remove("haveReadFalse");
+    HRBtnElement.classList.add("haveReadTrue");
+    currentBook.haveRead = true;
+    HRBtnElement.textContent = currentBook.haveReadMessage();
+  }
+}
 
 //create book elements and add to page
 function addBookToPage(book) {
   const  newBookCard = createElementWithClass("div", "book-card", "");
   newBookCard.setAttribute("data-book-id", book.bookID);
-
-
+  
   const newBookTitle = createElementWithClass("div", "title", book.title);
   const newBookAuthor = createElementWithClass("div", "author", book.author);
   const newBookPages = createElementWithClass("div", "pages", book.pages);
-  
+
   const newBookHaveRead = createElementWithClass("button", "haveRead", book.haveReadMessage());
-  if (book.haveRead === true) {
+    if (book.haveRead) {
     newBookHaveRead.classList.add("haveReadTrue");
   } else {newBookHaveRead.classList.add("haveReadFalse");}
-
+  
   newBookHaveRead.addEventListener("click", function() {
-    if (book.haveRead === true) {
-      newBookHaveRead.classList.remove("haveReadTrue");
-      newBookHaveRead.classList.add("haveReadFalse");
-      book.haveRead = false;
-      newBookHaveRead.textContent = book.haveReadMessage();
-    } else {
-      newBookHaveRead.classList.remove("haveReadFalse");
-      newBookHaveRead.classList.add("haveReadTrue");
-      book.haveRead = true;
-      newBookHaveRead.textContent = book.haveReadMessage();
-    }
-
+    haveReadBtnFnc(newBookHaveRead, book)
   });
-
+  
   const newBookNotes = createElementWithClass("div", "notes", "Notes: " + book.notes);
   const newBookDelBtn = createElementWithClass("button", "del-button", "✖");
-  delBtnFunction(newBookDelBtn);
-   
+  
+  newBookDelBtn.addEventListener("click", function() {
+    delBtnFunction(newBookDelBtn)
+  });
   
   newBookCard.appendChild(newBookTitle);
   newBookCard.appendChild(newBookAuthor);
   newBookCard.appendChild(newBookPages);
   newBookCard.appendChild(newBookHaveRead);
   newBookCard.appendChild(newBookNotes);
-  newBookCard.appendChild(newBookDelBtn);
-  
-  bookCards.appendChild(newBookCard);
-
-
-  
+  newBookCard.appendChild(newBookDelBtn);  
+  bookCards.appendChild(newBookCard);  
 }
 
-//add temp books to on page load
+//add intial books on page load
 myLibrary.forEach((book) => {
   addBookToPage(book);
 });
 
 //initilize bookID after adding books to library
 let nextBookID = myLibrary.length === 0 ? 0 : myLibrary[myLibrary.length - 1].bookID + 1;
-
 
 //-----------------------------Event Listeners-----------------------------//
 
@@ -156,16 +145,14 @@ submitBookBtn.addEventListener("click", function(event) {
     addNewBookBtn.classList.remove("hidden"); 
     newBookForm.reset();
 
-    console.log("nextBookID: " + nextBookID);
-    console.log("newBookID: " + newBook.bookID);
     nextBookID++;
   }
 });
 
-//tester
-document.querySelector("body").addEventListener("click", function() {
-  console.log("myLibrary: vvvv");
-  console.log(myLibrary);
-  console.log("nextBookID: " + nextBookID);
-  console.log("======================================================");
-});
+//debugger
+// document.querySelector("body").addEventListener("click", function() {
+//   console.log("myLibrary: vvvv");
+//   console.log(myLibrary);
+//   console.log("nextBookID: " + nextBookID);
+//   console.log("======================================================");
+// });

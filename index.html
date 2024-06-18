@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Library Project</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script src="javascript.js" defer></script>
@@ -16,7 +16,10 @@
 </div>
 
 <div class="button-and-form-section">
+  <!-- button reveals form -->
   <button class="add-new-book">Add New Book</button>
+
+  <!-- form is initially hidden -->
   <form action="#" method="post" class="hidden">
     <fieldset>
       <legend> Please fill out new book info </legend>
@@ -51,8 +54,8 @@
         placeholder="Add your personal notes here..."
         rows="5" cols="60"></textarea>
       </div>
+      <button type="submit" id="submit-book-btn">Submit Book</button>
     </fieldset>
-    <button type="submit" id="submit-book-btn">Submit Book</button>
   </form>
 </div>
 
