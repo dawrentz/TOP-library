@@ -7,22 +7,25 @@ const addNewBookBtn = document.querySelector(".add-new-book");
 
 const submitBookBtn = document.querySelector("#submit-book-btn");
 
+
+//-----------------------------Classes-----------------------------//
+class Book {
+  constructor (title, author, pages, haveRead, notes, bookID) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.haveRead = haveRead;
+    this.notes = notes;
+    this.bookID = bookID;
+    addBookToMyLibrary(this);
+  }
+}
+
 //intial books
 const book0 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true, "", 0);
 const book1 = new Book("The Shining", "Stephen King", 303, true, "", 1);
 const book2 = new Book("The Road", "Cormac McCarthy", 244, false, "", 2);
 const book3 = new Book("Moby Dick", "Herman Melville", 478, false, "", 3);
-
-//-----------------------------Constructors-----------------------------//
-function Book(title, author, pages, haveRead, notes, bookID) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.haveRead = haveRead;
-  this.notes = notes;
-  this.bookID = bookID;
-  addBookToMyLibrary(this);
-}
 
 //-----------------------------Methods-----------------------------//
 Book.prototype.haveReadMessage = function() {
