@@ -19,6 +19,10 @@ class Book {
     this.bookID = bookID;
     addBookToMyLibrary(this);
   }
+
+  haveReadMessage() {
+   return this.haveRead ? "read" : "not read yet";
+  }
 }
 
 //intial books
@@ -28,9 +32,6 @@ const book2 = new Book("The Road", "Cormac McCarthy", 244, false, "", 2);
 const book3 = new Book("Moby Dick", "Herman Melville", 478, false, "", 3);
 
 //-----------------------------Methods-----------------------------//
-Book.prototype.haveReadMessage = function() {
- return this.haveRead ? "read" : "not read yet";
-}
 
 //from initial assignment
 // Book.prototype.info = function() {
@@ -153,9 +154,9 @@ submitBookBtn.addEventListener("click", function(event) {
 });
 
 //debugger
-// document.querySelector("body").addEventListener("click", function() {
-//   console.log("myLibrary: vvvv");
-//   console.log(myLibrary);
-//   console.log("nextBookID: " + nextBookID);
-//   console.log("======================================================");
-// });
+document.querySelector("body").addEventListener("click", function() {
+  console.log("myLibrary: vvvv");
+  console.table(myLibrary);
+  console.log("nextBookID: " + nextBookID);
+  console.log("======================================================");
+});
