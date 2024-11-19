@@ -9,7 +9,7 @@ body {
   background-attachment: fixed;
   box-sizing: border-box;
 
-  padding: 1rem 5rem 0; 
+  padding: 1rem 5rem 0;
 
   display: flex;
   flex-direction: column;
@@ -43,15 +43,15 @@ h1 {
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.863);
   box-shadow: 2px 2px 2px black;
-  
+
   display: grid;
   grid-template-rows: repeat(5, auto) 1fr;
   gap: 0.25rem;
   justify-items: center;
   text-align: center;
-  
+
   height: 100%;
-  
+
   &:hover {
     outline: dodgerblue solid 5px;
   }
@@ -59,13 +59,13 @@ h1 {
   * {
     max-width: 100%;
     text-overflow: ellipsis;
-    
+
     /* from MDN */
-    display: -webkit-box;      /* Use WebKit box layout model */
+    display: -webkit-box; /* Use WebKit box layout model */
     -webkit-box-orient: vertical; /* Vertical box orientation */
-    -webkit-line-clamp: 1;     /* Show only # lines */
-    overflow: hidden;          /* Hide the rest of the content */
-    text-overflow: ellipsis;   /* Show ellipsis (...) */
+    -webkit-line-clamp: 1; /* Show only # lines */
+    overflow: hidden; /* Hide the rest of the content */
+    text-overflow: ellipsis; /* Show ellipsis (...) */
   }
 
   .del-button {
@@ -78,7 +78,7 @@ h1 {
     border-radius: 50%;
     color: black;
     font-weight: 100;
-    
+
     --hw: 1.5rem;
     height: var(--hw);
     width: var(--hw);
@@ -97,50 +97,50 @@ h1 {
   .title {
     font-size: large;
     text-decoration: underline;
-    
+
     &:hover {
       cursor: pointer;
       font-weight: bold;
     }
   }
-  
+
   .author {
     font-style: italic;
   }
-  
+
   button.haveRead {
     font-weight: bold;
     box-shadow: none;
     padding: 0 0.5rem;
-      
+
     &:hover {
       transform: none;
     }
-    
+
     &.haveReadTrue {
-      background-color: green; 
-      
+      background-color: green;
+
       &:hover {
         outline: green solid 2px;
       }
     }
-    
+
     &.haveReadFalse {
-      background-color: red;  
-      
+      background-color: red;
+
       &:hover {
         outline: red solid 2px;
-      } 
+      }
     }
   }
-  
+
   .notes {
     /* from MDN */
-    display: -webkit-box;      /* Use WebKit box layout model */
+    display: -webkit-box; /* Use WebKit box layout model */
     -webkit-box-orient: vertical; /* Vertical box orientation */
-    -webkit-line-clamp: 4;     /* Show only # lines */
-    overflow: hidden;          /* Hide the rest of the content */
-    text-overflow: ellipsis;   /* Show ellipsis (...) */
+    -webkit-line-clamp: 4; /* Show only # lines */
+    overflow: hidden; /* Hide the rest of the content */
+    text-overflow: ellipsis; /* Show ellipsis (...) */
   }
 }
 
@@ -166,9 +166,9 @@ button {
     cursor: pointer;
     transform: scale(1.02);
   }
-} 
+}
 
-form {  
+form {
   background-color: rgba(255, 255, 255, 0.863);
   border-radius: 1rem;
 
@@ -209,20 +209,22 @@ form {
     input {
       padding: 0 0.25rem;
       border: gray solid 1px;
-      
+
       &:not([id="haveRead"]) {
         width: 20rem;
       }
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         outline: black solid 1px;
         border-radius: 2px;
       }
 
-      &[type='checkbox'] {
+      &[type="checkbox"] {
         appearance: auto;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           outline: 0;
         }
       }
@@ -244,7 +246,8 @@ form {
       padding: 0 0.25rem;
       margin-right: 1.25rem;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         outline: black solid 1px;
         border-radius: 2px;
       }
@@ -263,7 +266,7 @@ form {
 
   a {
     text-decoration: underline;
-    
+
     &:visited {
       color: purple;
     }
